@@ -31,7 +31,7 @@ wait_time = 15
 voltage = 220
 
 # file name to store the data
-file_name = current_data.csv
+file_name = "current_data.csv"
 
 with open(file_name, "w", newline='') as csv_file:
     writer = csv.writer(csv_file, delimiter=',')
