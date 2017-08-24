@@ -2,6 +2,7 @@
 
 import smbus
 import time
+import datetime
 import sys
 
 # Get I2C bus
@@ -30,6 +31,8 @@ voltage = 220
 
 for x in range(0, read_times):
     print(x)
+    ts = datetime.datetime.now()
+    print(ts)
     try:
         bus.write_i2c_block_data(0x2A, 0x92, read_power_flow_command)
         time.sleep(0.5)
