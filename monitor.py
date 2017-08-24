@@ -22,13 +22,13 @@ no_of_channels = 1
 read_power_flow_command = [0x6A, 0x01, 0x01, 0x00, 0x00, 0xFF]
 
 # number of times to read the current
-read_times = input("How many times should the circuit be checked? ")
+read_times = int(input("How many times should the circuit be checked? "))
 
 # seconds to wait between each reading
-wait_time = input("What is the interval in seconds between each check? ")
+wait_time = int(input("What is the interval in seconds between each check? "))
 
 # voltage of the circuit
-voltage = input("What is the voltage of the circuit? ")
+voltage = int(input("What is the voltage of the circuit? "))
 
 # file name to store the data
 file_name = input("What should the filename be where the data is stored? ")
