@@ -22,16 +22,16 @@ no_of_channels = 1
 read_power_flow_command = [0x6A, 0x01, 0x01, 0x00, 0x00, 0xFF]
 
 # number of times to read the current
-read_times = 10
+read_times = input("How many times should the circuit be checked? ")
 
 # seconds to wait between each reading
-wait_time = 15
+wait_time = input("What is the interval in seconds between each check? ")
 
 # voltage of the circuit
-voltage = 220
+voltage = input("What is the voltage of the circuit? ")
 
 # file name to store the data
-file_name = "current_data.csv"
+file_name = input("What should the filename be where the data is stored? ")
 
 with open(file_name, "w", newline='') as csv_file:
     writer = csv.writer(csv_file, delimiter=',')
