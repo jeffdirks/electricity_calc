@@ -4,6 +4,7 @@ import smbus
 import time
 import datetime
 import sys
+import csv
 
 # Get I2C bus
 
@@ -29,29 +30,37 @@ wait_time = 15
 # voltage of the circuit
 voltage = 220
 
-for x in range(0, read_times):
-    print(x)
-    ts = datetime.datetime.now()
-    print(ts)
-    try:
-        bus.write_i2c_block_data(0x2A, 0x92, read_power_flow_command)
-        time.sleep(0.5)
-        data = bus.read_i2c_block_data(0x2A, 0x55, 4)
+# file name to store the data
+file_name = current_data.csv
 
-        # convert the data
-        msb1 = data[0]
-        msb = data[1]
-        lsb = data[2]
+with open(file_name, "w", newline='') as csv_file:
+    writer = csv.writer(csv_file, delimiter=',')
 
-        amps = (msb1 * 65536 + msb * 256 + lsb) / 1000.0
-        watts = amps * voltage
+    for x in range(0, read_times):
+        print(x)
+        ts = datetime.datetime.now()
+        print(ts)
+        try:
+            bus.write_i2c_block_data(0x2A, 0x92, read_power_flow_command)
+            time.sleep(0.5)
+            data = bus.read_i2c_block_data(0x2A, 0x55, 4)
 
-        print("Current amps : %.3f A" %amps)
-        print("Current watts : %.3f w" %watts)
-        time.sleep(wait_time)
+            # convert the data
+            msb1 = data[0]
+            msb = data[1]
+            lsb = data[2]
 
-    # kept having errors with either reading or writing the data
-    # this error handling just skips that attempt at reading the data
-    # and continues on to the next one.
-    except IOError:
-        print("Error reading or writing to the bus.")
+            amps = (msb1 * 65536 + msb * 256 + lsb) / 1000.0
+            watts = amps * voltage
+
+            print("Current amps : %.3f A" %amps)
+            print("Current watts : %.3f w" %watts)
+            writer.writerow([ts, amps, watts])
+            print("Wrote data to file.")
+            time.sleep(wait_time)
+
+        # kept having errors with either reading or writing the data
+        # this error handling just skips that attempt at reading the data
+        # and continues on to the next one.
+        except IOError:
+            print("Error reading or writing to the bus.")
