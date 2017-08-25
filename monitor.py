@@ -19,7 +19,7 @@ no_of_channels = 1
 # Header byte-2, command-1, start channel-1, stop channel-12, byte 5 and 6 reserved, checksum
 # ControlEverying.com has a Current Monitoring Reference Guide on their website
 # for the board. Instructions are there on how to calculate the checksum
-read_power_flow_command = [0x6A, 0x01, 0x01, 0x00, 0x00, 0xFF]
+read_power_flow_command = [0x6A, 0x01, 0x01, 0x01, 0x00, 0x00, 0xFF]
 
 # number of times to read the current
 read_times = int(input("How many times should the circuit be checked? "))
